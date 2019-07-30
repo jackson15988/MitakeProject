@@ -14,7 +14,7 @@ import com.mirake.server.bo.mirakeBo;
 
 /**
  * 
- * @author IMI-JAVA-Ryan ¶i¤J¸ê®Æ®w¨Ï¥Î¤èªk
+ * @author IMI-JAVA-Ryan ï¿½iï¿½Jï¿½ï¿½Æ®wï¿½Ï¥Î¤ï¿½k
  *
  */
 @WebServlet("/addNewUser")
@@ -36,23 +36,25 @@ public class addNewUser extends HttpServlet {
 		inserVal.put("CUSTOMERNUMBER", "MTK" + rnd.nextInt());
 
 		String resultCdoe = mirakeBo.addNewMember(inserVal);
-		System.out.println("·|­û¦WºÙ" + userName);
-		System.out.println("·|­û¤â¾÷" + userPhone);
-		System.out.println("·|­ûEMAIL" + email);
-		System.out.println("·|­û¦a§}" + address);
-
-		System.out.println("¦¨¥\½X»P§_:" + resultCdoe);
+//		System.out.println("ï¿½|ï¿½ï¿½ï¿½Wï¿½ï¿½" + userName);
+//		System.out.println("ï¿½|ï¿½ï¿½ï¿½ï¿½ï¿½" + userPhone);
+//		System.out.println("ï¿½|ï¿½ï¿½EMAIL" + email);
+//		System.out.println("ï¿½|ï¿½ï¿½ï¿½aï¿½}" + address);
+//
+//		System.out.println("ï¿½ï¿½ï¿½\ï¿½Xï¿½Pï¿½_:" + resultCdoe);
 
 		response.setContentType("text/json;charset=UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter out = response.getWriter();
 
 		if (resultCdoe.equals("0")) {
-			String str = "{\"code\":\"0\",\"message\":\"·|­û·s¼W¦¨¥\\"}";
+			String str = "{\"code\":\"-1\",\"message\":\"éŒ¯èª¤\"}";
 			out.println(str);
-		} else {
-			out.write("[{\"code\":-1,\"message\":·|­û·s¼W¥¢±Ñ}]");
-			String str = "{\"code\":\"-1\",\"message\":\"·|­û·s¼W¥¢±Ñ\"}";
+		} else
+
+		{
+			out.write("[{\"code\":-1,\"message\":éŒ¯èª¤}]");
+			String str = "{\"code\":\"-1\",\"message\":\"éŒ¯èª¤\"}";
 			out.println(str);
 		}
 		out.flush();

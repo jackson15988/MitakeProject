@@ -30,7 +30,7 @@ public class memberlogin extends HttpServlet {
 		}
 
 		if (code.equals("-1")) {
-			request.setAttribute("errorMessage", "±b¸¹±K½Xµo¥Í¿ù»~!"); 
+			request.setAttribute("errorMessage", "å¸³è™Ÿæˆ–å¯†ç¢¼éŒ¯èª¤!"); 
 			request.getRequestDispatcher("sign-in.jsp").forward(request, response);
 
 		}else{
@@ -39,7 +39,7 @@ public class memberlogin extends HttpServlet {
 		}
 		System.out.println(username);
 		System.out.println(password);
-		System.out.println("¦¨¥\½X :" + code);
+//		System.out.println("ï¿½ï¿½ï¿½\ï¿½X :" + code);
 
 	}
 
