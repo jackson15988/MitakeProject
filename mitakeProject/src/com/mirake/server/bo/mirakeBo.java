@@ -18,7 +18,11 @@ public class mirakeBo {
 	// final static String dbUserPassword = "36f57bc6fd";
 
 	public static void main(String[] args) throws SQLException {
-		HashMap<String, Object> testVal = new HashMap<>();
+		HashMap<String, LinkedList<String>> testVal = new HashMap<>();
+		
+		
+		testVal = mirakeBo.getCustInformation();
+		System.out.println(testVal.get("MTK1624089311"));
 //		testVal.put("USERNAME", "王阳明");
 //		testVal.put("USERPHONE", "0988664154");
 //		testVal.put("USEREMAIL", "test0095154487@gmail.com");
@@ -217,12 +221,12 @@ public class mirakeBo {
 
 	}
 
-	public static HashMap<String, Object> getCustInformation() throws SQLException {
+	public static HashMap<String, LinkedList<String>> getCustInformation() throws SQLException {
 		Connection conn = null;
 		Statement stmt = null;
 
-		LinkedList<String> linkVal = new LinkedList<>();
-		HashMap<String, Object> custHashMap = new HashMap<>();
+	
+		HashMap<String, LinkedList<String>> custHashMap = new HashMap<>();
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			// System.out.println("連接成功MySQLToJava");
@@ -231,19 +235,19 @@ public class mirakeBo {
 			// 以下的資料庫操作請參考本blog中: "使用 Java 連結與存取 access 資料庫 (JDBC)"
 			conn = DriverManager.getConnection(datasource);
 			stmt = conn.createStatement();
-			String sql = "SELECT ID,CUSTOMERNUMBER,USERNAME,USERPHONE FROM fo_systemconfig ;";
+			String sql = "SELECT ID,CUSTOMERNUMBER,USERNAME,USERPHONE FROM fo_customerlist ;";
 			ResultSet result = stmt.executeQuery(sql);
-
+			
+		   
+	
 			while (result.next()) {
+				LinkedList<String> linkVal = new LinkedList<>();
 				linkVal.add(result.getString("ID"));
 				linkVal.add(result.getString("CUSTOMERNUMBER"));
 				linkVal.add(result.getString("USERNAME"));
 				linkVal.add(result.getString("USERPHONE"));
 				custHashMap.put(result.getString("CUSTOMERNUMBER"), linkVal);
-				// 不等於空時候才清除
-				if (!linkVal.isEmpty()) {
-					linkVal.clear();
-				}
+			
 			}
 		} catch (Exception e) {
 			stmt.close();

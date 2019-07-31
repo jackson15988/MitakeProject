@@ -24,7 +24,7 @@ public class mirakeSmsThread extends Thread {
 		
 		
 		String messageContents = "需要傳遞給客戶的訊息";
-		String messageTransferNumber = "訊息策略編號";
+		String messageTransferNumber = "15445";
 		
 		
 		//取得三竹資訊的證券
@@ -32,8 +32,10 @@ public class mirakeSmsThread extends Thread {
 		try {
 			mitakLoginVal = mirakeBo.getMitakeSettingVal();
 			PhoneNewsletter phletter = new PhoneNewsletter();
+		
 			//傳送三竹簡訊給客戶
-			phletter.sendSMSmessaging(messageContents, messageTransferNumber , mitakLoginVal);
+			phletter.MT4oederSMSMessage(messageContents, messageTransferNumber , mitakLoginVal);
+		
 					
 		} catch (SQLException e) {
 			System.out.println("資料發生錯誤:" + e);
