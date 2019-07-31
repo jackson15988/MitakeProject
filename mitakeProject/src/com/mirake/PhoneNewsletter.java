@@ -7,6 +7,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.util.HashMap;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -41,17 +42,18 @@ public class PhoneNewsletter {
 
 		URL url;
 		try {
-			url = new URL("http://smsapi.mitake.com.tw/api/mtk/SmBulkSend?username=55779783&password=536225ab&Encoding_PostIn=UTF-8");
+			url = new URL(
+					"http://smsapi.mitake.com.tw/api/mtk/SmBulkSend?username=55779783&password=536225ab&Encoding_PostIn=UTF-8");
 			HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 			urlConnection.setRequestMethod("POST");
 			urlConnection.setDoOutput(true);
 			DataOutputStream out = new DataOutputStream(urlConnection.getOutputStream());
 			StringBuffer body = new StringBuffer();
-			
-			body.append("82555$$0985803583$$$$$$$$$$����撅撅狗璅狗璅�").append("\r\n");
-			body.append("98547$$0920323591$$$$$$$$$$����撅撅狗璅狗璅�").append("\r\n");
+
+			body.append("82555$$0908137867$$$$$$$$$$訊號傳送").append("\r\n");
+			body.append("98547$$0966302982$$$$$$$$$$訊號傳送").append("\r\n");
 			out.write(body.toString().getBytes("UTF-8"));
-			
+
 			BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
 			String inputLine;
 			StringBuffer response = new StringBuffer();
@@ -60,14 +62,13 @@ public class PhoneNewsletter {
 				response.append(inputLine);
 			}
 			System.out.println(response.toString());
-			
+
 			out.flush();
 			out.close();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 
 	}
 
@@ -118,33 +119,26 @@ public class PhoneNewsletter {
 		System.out.println(response.toString());
 
 	}
-	
+
 	/**
 	 * 
-	 * @param messageContents  ��閬����摰�
+	 * @param messageContents       ��閬����摰�
 	 * @param messageTransferNumber ����隞����
+	 * @param mitakLoginVal
 	 * @return
 	 */
-	public static String sendSMSmessaging(String messageContents ,  String messageTransferNumber) {
+	public static String sendSMSmessaging(String messageContents, String messageTransferNumber,
+			HashMap<String, Object> mitakLoginVal) {
 		URL url;
-		
+
 		try {
-			// DB 撣唾��Ⅳ鞈����� 
-			String driver = "com.mysql.jdbc.Driver";
-			String dbUrl = "jdbc:mysql://localhost:3306/user";
-			String username = "test";
-			String password = "test";
-			// DB 撣唾��Ⅳ鞈����� 
-			String sql = "select * from MITK_CUST_INFORMATION";//蝺典神閬銵�ql隤嚗迨��敺ser銵其葉�閰Ｘ���蝙������
-			
-			
-			
-			url = new URL("http://smsapi.mitake.com.tw/api/mtk/SmBulkSend?username=55779783&password=536225ab&Encoding_PostIn=UTF-8");
+			url = new URL(
+					"http://smsapi.mitake.com.tw/api/mtk/SmBulkSend?username=55779783&password=536225ab&Encoding_PostIn=UTF-8");
 			HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 			urlConnection.setRequestMethod("POST");
 			urlConnection.setDoOutput(true);
 			DataOutputStream out = new DataOutputStream(urlConnection.getOutputStream());
-			StringBuffer body = new StringBuffer();	
+			StringBuffer body = new StringBuffer();
 			body.append("82555$$0985803583$$$$$$$$$$" + messageContents).append("\r\n");
 			body.append("98547$$0920323591$$$$$$$$$$" + messageContents).append("\r\n");
 			out.write(body.toString().getBytes("UTF-8"));
@@ -156,17 +150,53 @@ public class PhoneNewsletter {
 				response.append(inputLine);
 			}
 			System.out.println(response.toString());
-			
+
 			out.flush();
 			out.close();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
+
 		return null;
-		
+
+	}
+
+	public static String MT4oederSMSMessage(String messageContents, String messageTransferNumber,
+			HashMap<String, Object> mitakLoginVal) {
+		URL url;
+		try {
+			url = new URL("" + mitakLoginVal.get("") + "?username=" + mitakLoginVal.get("") + "&password="
+					+ mitakLoginVal.get("") + "&Encoding_PostIn=UTF-8");
+			HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+			urlConnection.setRequestMethod("POST");
+			urlConnection.setDoOutput(true);
+			DataOutputStream out = new DataOutputStream(urlConnection.getOutputStream());
+			StringBuffer body = new StringBuffer();
+			
+			
+			
+			
+			body.append("82555$$0908137867$$$$$$$$$$"+messageContents+"").append("\r\n");
+			body.append("98547$$0966302982$$$$$$$$$$"+messageContents+"").append("\r\n");
+			out.write(body.toString().getBytes("UTF-8"));
+
+			BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+			String inputLine;
+			StringBuffer response = new StringBuffer();
+
+			while ((inputLine = in.readLine()) != null) {
+				response.append(inputLine);
+			}
+			System.out.println(response.toString());
+
+			out.flush();
+			out.close();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return messageTransferNumber;
 	}
 
 }

@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 public class mirakeBo {
 
@@ -16,16 +17,17 @@ public class mirakeBo {
 	// final static String dbUserName = "root";
 	// final static String dbUserPassword = "36f57bc6fd";
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException {
 		HashMap<String, Object> testVal = new HashMap<>();
-		testVal.put("USERNAME", "王阳明");
-		testVal.put("USERPHONE", "0988664154");
-		testVal.put("USEREMAIL", "test0095154487@gmail.com");
-		testVal.put("ADDRESS", "台北市中正东西一号三楼之一");
-		java.util.Random rnd = new java.util.Random();
-		rnd.setSeed(System.currentTimeMillis());
-		testVal.put("CUSTOMERNUMBER", "MTK" + rnd.nextInt());
-		String ex = addNewMember(testVal);
+//		testVal.put("USERNAME", "王阳明");
+//		testVal.put("USERPHONE", "0988664154");
+//		testVal.put("USEREMAIL", "test0095154487@gmail.com");
+//		testVal.put("ADDRESS", "台北市中正东西一号三楼之一");
+//		java.util.Random rnd = new java.util.Random();
+//		rnd.setSeed(System.currentTimeMillis());
+//		testVal.put("CUSTOMERNUMBER", "MTK" + rnd.nextInt());
+//		String ex = addNewMember(testVal);
+
 	}
 
 	public static String addNewMember(HashMap<String, Object> inserVal) {
@@ -170,6 +172,89 @@ public class mirakeBo {
 		}
 		return successCode;
 
+	}
+
+	/**
+	 * @author IMI-JAVA-Ryan 取得三竹資訊資訊的帳號密碼
+	 * @return
+	 * @throws SQLException
+	 */
+	public static HashMap<String, Object> getMitakeSettingVal() throws SQLException {
+
+		HashMap<String, Object> itMap = new HashMap<>();
+		Connection conn = null;
+		Statement stmt = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			// System.out.println("連接成功MySQLToJava");
+			// 建立讀取資料庫 (test 為資料庫名稱; user 為MySQL使用者名稱; passwrod 為MySQL使用者密碼)
+			String datasource = "jdbc:mysql://45.32.49.87:3306/myforex?user=root&password=36f57bc6fd&useSSL=false&serverTimezone=UTC&characterEncoding=UTF-8";
+			// 以下的資料庫操作請參考本blog中: "使用 Java 連結與存取 access 資料庫 (JDBC)"
+			conn = DriverManager.getConnection(datasource);
+			stmt = conn.createStatement();
+			String sql = "SELECT MITAKEACCOUNT,MITAKEPASSWORD,MITAKEURL FROM fo_systemconfig ;";
+			ResultSet result = stmt.executeQuery(sql);
+
+			if (result.next()) {
+				itMap.put("MITAKE_ACCOUNT", result.getString(1) == null ? "" : result.getString(1));
+				itMap.put("MITAKE_PASSWORD", result.getString(2) == null ? "" : result.getString(2));
+				itMap.put("MITAKE_URL", result.getString(3) == null ? "" : result.getString(3));
+				System.out.print(result.getString(1) + "\t");
+				System.out.print(result.getString(2) + "\t");
+				System.out.print(result.getString(3) + "\t");
+			}
+
+		} catch (Exception e) {
+			stmt.close();
+			conn.close();
+		} finally {
+
+			stmt.close();
+			conn.close();
+		}
+
+		return itMap;
+
+	}
+
+	public static HashMap<String, Object> getCustInformation() throws SQLException {
+		Connection conn = null;
+		Statement stmt = null;
+
+		LinkedList<String> linkVal = new LinkedList<>();
+		HashMap<String, Object> custHashMap = new HashMap<>();
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			// System.out.println("連接成功MySQLToJava");
+			// 建立讀取資料庫 (test 為資料庫名稱; user 為MySQL使用者名稱; passwrod 為MySQL使用者密碼)
+			String datasource = "jdbc:mysql://45.32.49.87:3306/myforex?user=root&password=36f57bc6fd&useSSL=false&serverTimezone=UTC&characterEncoding=UTF-8";
+			// 以下的資料庫操作請參考本blog中: "使用 Java 連結與存取 access 資料庫 (JDBC)"
+			conn = DriverManager.getConnection(datasource);
+			stmt = conn.createStatement();
+			String sql = "SELECT ID,CUSTOMERNUMBER,USERNAME,USERPHONE FROM fo_systemconfig ;";
+			ResultSet result = stmt.executeQuery(sql);
+
+			while (result.next()) {
+				linkVal.add(result.getString("ID"));
+				linkVal.add(result.getString("CUSTOMERNUMBER"));
+				linkVal.add(result.getString("USERNAME"));
+				linkVal.add(result.getString("USERPHONE"));
+				custHashMap.put(result.getString("CUSTOMERNUMBER"), linkVal);
+				// 不等於空時候才清除
+				if (!linkVal.isEmpty()) {
+					linkVal.clear();
+				}
+			}
+		} catch (Exception e) {
+			stmt.close();
+			conn.close();
+		} finally {
+			stmt.close();
+			conn.close();
+
+		}
+
+		return custHashMap;
 	}
 
 }

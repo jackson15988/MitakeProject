@@ -39,7 +39,6 @@ public class memberlogin extends HttpServlet {
 		}
 		System.out.println(username);
 		System.out.println(password);
-//		System.out.println("���\�X :" + code);
 
 	}
 

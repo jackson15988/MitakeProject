@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -17,6 +18,7 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mirake.server.bo.mirakeSmsThread;
 
 
 
@@ -45,7 +47,10 @@ public class SmSend extends HttpServlet {
 			jsonStr = orderval;
 			java.util.Date d1 = null;
 			JSONArray jsonArray = JSONArray.fromObject(jsonStr);
-			List<Object[]> batchArgs = new ArrayList<>();
+//			List<Object[]> batchArgs = new ArrayList<>();
+			
+			HashMap<String, Object> batchArgsMap = new HashMap<>();
+			
 
 			for (int i = 0; i < jsonArray.length(); i++) {
 				JSONObject jUser = jsonArray.getJSONObject(i);
@@ -61,12 +66,25 @@ public class SmSend extends HttpServlet {
 				} catch (ParseException e) {
 					System.out.println("轉換sqlDate對象失敗:" + e);
 				}
-				batchArgs.add(new Object[] { jUser.get("OrderSymbol").toString(), jUser.get("OrderType").toString(),
-						jUser.get("OrderOpenPrice").toString(), jUser.get("OrderStopLoss").toString(),
-						jUser.get("OrderTakeProfit").toString(), d1, 15221, jUser.get("OrderLots").toString(),
-						jUser.get("OrderTicket").toString() });
+//				batchArgs.add(new Object[] { jUser.get("OrderSymbol").toString(), jUser.get("OrderType").toString(),
+//						jUser.get("OrderOpenPrice").toString(), jUser.get("OrderStopLoss").toString(),
+//						jUser.get("OrderTakeProfit").toString(), d1, 15221, jUser.get("OrderLots").toString(),
+//						jUser.get("OrderTicket").toString() });
+				
+				batchArgsMap.put("OrderSymbol",  jUser.get("OrderSymbol").toString());
+				batchArgsMap.put("OrderType",  jUser.get("OrderType").toString());
+				batchArgsMap.put("OrderOpenPrice",  jUser.get("OrderOpenPrice").toString());
+				batchArgsMap.put("OrderStopLoss",  jUser.get("OrderStopLoss").toString());
+				batchArgsMap.put("OrderTakeProfit",  jUser.get("OrderTakeProfit").toString());
+				batchArgsMap.put("OrderLots",  jUser.get("OrderLots").toString());
+				batchArgsMap.put("OrderTicket",  jUser.get("OrderTicket").toString());
+				batchArgsMap.put("OrderOpenTimer",  d1);
 			}
-			System.out.println("取得" + batchArgs);
+
+			
+			mirakeSmsThread meth = new mirakeSmsThread();  //NEW 多執行續
+			meth.setBatchArgsMaps(batchArgsMap);
+			meth.start();
 		}
 
 	}
