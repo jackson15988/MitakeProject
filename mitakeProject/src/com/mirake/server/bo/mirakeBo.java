@@ -244,7 +244,6 @@ public class mirakeBo {
 				linkVal.add(result.getString("USERNAME"));
 				linkVal.add(result.getString("USERPHONE"));
 				custHashMap.put(result.getString("CUSTOMERNUMBER"), linkVal);
-			
 			}
 		} catch (Exception e) {
 			stmt.close();

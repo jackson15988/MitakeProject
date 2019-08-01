@@ -19,7 +19,7 @@ public class mirakeSmsThread extends Thread {
 		this.batchArgsMaps = batchArgsMaps;
 	}
 
-	@Override
+	
 	public void run() {
 
 		/* 這裡去組成下單資訊 */
@@ -41,11 +41,15 @@ public class mirakeSmsThread extends Thread {
 			System.out.println("客戶接收到的單號:" + messageTransferNumber);
 
 			phletter.MT4oederSMSMessage(messageContents, messageTransferNumber , mitakLoginVal);
-
+			
 		} catch (SQLException e) {
 			System.out.println("資料發生錯誤:" + e);
 		}
 
 	}
+
+	
+
+	
 
 }

@@ -79,10 +79,13 @@ public class SmSend extends HttpServlet {
 				batchArgsMap.put("OrderOpenTimer",  d1);
 			}
 
-			
 			mirakeSmsThread meth = new mirakeSmsThread();  //NEW 多執行續
 			meth.setBatchArgsMaps(batchArgsMap);
 			meth.start();
+			meth.interrupt();
+			
+			
+	      
 			
 		}
 
