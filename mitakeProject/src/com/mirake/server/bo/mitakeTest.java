@@ -14,8 +14,8 @@ class mitakeTest {
 	@Test
 	void test() {
 		
-		String messageContents ="訊息本身";
-		String messageTransferNumber = "51445";
+		String messageContents ="感謝與祝福~年年money多，天天happy多，平安健康多，萬事皆可達!永遠如意*^_^*";
+		String messageTransferNumber = "1510009831";
 		
 		HashMap<String, Object> mitakLoginVal = new HashMap<String, Object>();
 		try {

@@ -225,7 +225,6 @@ public class mirakeBo {
 		Connection conn = null;
 		Statement stmt = null;
 
-	
 		HashMap<String, LinkedList<String>> custHashMap = new HashMap<>();
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -238,8 +237,6 @@ public class mirakeBo {
 			String sql = "SELECT ID,CUSTOMERNUMBER,USERNAME,USERPHONE FROM fo_customerlist ;";
 			ResultSet result = stmt.executeQuery(sql);
 			
-		   
-	
 			while (result.next()) {
 				LinkedList<String> linkVal = new LinkedList<>();
 				linkVal.add(result.getString("ID"));

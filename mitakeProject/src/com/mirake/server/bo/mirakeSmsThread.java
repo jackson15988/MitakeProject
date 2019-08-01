@@ -23,6 +23,8 @@ public class mirakeSmsThread extends Thread {
 	public void run() {
 		
 		
+		/*這裡去組成下單資訊*/
+		
 		String messageContents = "需要傳遞給客戶的訊息";
 		String messageTransferNumber = "15445";
 		
@@ -34,7 +36,8 @@ public class mirakeSmsThread extends Thread {
 			PhoneNewsletter phletter = new PhoneNewsletter();
 		
 			//傳送三竹簡訊給客戶
-			phletter.MT4oederSMSMessage(messageContents, messageTransferNumber , mitakLoginVal);
+			System.out.println("多執行續");
+//			phletter.MT4oederSMSMessage(messageContents, messageTransferNumber , mitakLoginVal);
 		
 					
 		} catch (SQLException e) {

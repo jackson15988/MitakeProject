@@ -142,9 +142,7 @@ public class PhoneNewsletter {
 			urlConnection.setDoOutput(true);
 			DataOutputStream out = new DataOutputStream(urlConnection.getOutputStream());
 			StringBuffer body = new StringBuffer();
-			
-			
-			
+
 			body.append("82555$$0985803583$$$$$$$$$$" + messageContents).append("\r\n");
 			body.append("98547$$0920323591$$$$$$$$$$" + messageContents).append("\r\n");
 			out.write(body.toString().getBytes("UTF-8"));
@@ -167,41 +165,39 @@ public class PhoneNewsletter {
 		return null;
 
 	}
-	
-	
-	
+
 	/**
 	 * 
-	 * @param messageContents 訊息文本本身
-	 * @param messageTransferNumber  訊息訊號
-	 * @param mitakLoginVal  //三竹資訊登入資訊
+	 * @param messageContents       訊息文本本身
+	 * @param messageTransferNumber 訊息訊號
+	 * @param mitakLoginVal         //三竹資訊登入資訊
 	 * @return
 	 */
 	public static String MT4oederSMSMessage(String messageContents, String messageTransferNumber,
 			HashMap<String, Object> mitakLoginVal) {
 		URL url;
 		try {
-			url = new URL("" + mitakLoginVal.get("MITAKE_URL") + "?username=" + mitakLoginVal.get("MITAKE_ACCOUNT") + "&password="
-					+ mitakLoginVal.get("MITAKE_PASSWORD") + "&Encoding_PostIn=UTF-8");
+			url = new URL("" + mitakLoginVal.get("MITAKE_URL") + "?username=" + mitakLoginVal.get("MITAKE_ACCOUNT")
+					+ "&password=" + mitakLoginVal.get("MITAKE_PASSWORD") + "&Encoding_PostIn=UTF-8");
 			HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 			urlConnection.setRequestMethod("POST");
 			urlConnection.setDoOutput(true);
 			DataOutputStream out = new DataOutputStream(urlConnection.getOutputStream());
 			StringBuffer body = new StringBuffer();
-			
+
 			HashMap<String, LinkedList<String>> custInformation = mirakeBo.getCustInformation();
 			for (String key : custInformation.keySet()) {
-				
 				LinkedList<String> ex = custInformation.get(key);
-
-				System.out.println(ex.get(0));
+				messageTransferNumber = messageTransferNumber + "NO" + ex.get(0);
+				String custPhoneNumber = ex.get(3);	
+				body.append(""+messageTransferNumber+"$$"+custPhoneNumber+"$$$$$$$$$$" + messageContents + "").append("\r\n");
+				System.out.println(messageTransferNumber + "NO" + ex.get(0));
 				System.out.println(ex.get(1));
 				System.out.println(ex.get(2));
+				System.out.println(ex.get(3));
 			}
-			
-			
-			body.append("82555$$0908137867$$$$$$$$$$"+messageContents+"").append("\r\n");
-			body.append("98547$$0966302982$$$$$$$$$$"+messageContents+"").append("\r\n");
+
+//			body.append("98547$$0966302982$$$$$$$$$$" + messageContents + "").append("\r\n");
 			out.write(body.toString().getBytes("UTF-8"));
 
 			BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
