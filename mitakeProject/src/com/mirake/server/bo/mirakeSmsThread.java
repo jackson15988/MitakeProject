@@ -21,25 +21,27 @@ public class mirakeSmsThread extends Thread {
 
 	@Override
 	public void run() {
-		
-		
-		/*這裡去組成下單資訊*/
-		
-		String messageContents = "需要傳遞給客戶的訊息";
-		String messageTransferNumber = "15445";
-		
-		
-		//取得三竹資訊的證券
+
+		/* 這裡去組成下單資訊 */
+		StringBuffer body = new StringBuffer();
+		body.append("SymBol:" + batchArgsMaps.get("OrderSymbol") + "//" + "Price:" + batchArgsMaps.get("OrderOpenPrice")
+				+ "//Type:"+batchArgsMaps.get("OrderType"));
+		body.append("//Timer:"+batchArgsMaps.get("OrderOpenTimer") + " 投資一定有風險，請嚴設停損。");
+		String messageContents = body.toString();
+		String messageTransferNumber = (String) batchArgsMaps.get("OrderTicket");
+
+		// 取得三竹資訊的證券
 		HashMap<String, Object> mitakLoginVal = new HashMap<>();
 		try {
 			mitakLoginVal = mirakeBo.getMitakeSettingVal();
 			PhoneNewsletter phletter = new PhoneNewsletter();
-		
-			//傳送三竹簡訊給客戶
-			System.out.println("多執行續");
-//			phletter.MT4oederSMSMessage(messageContents, messageTransferNumber , mitakLoginVal);
-		
-					
+
+			// 傳送三竹簡訊給客戶
+			System.out.println("客戶接收到的訊息:" + messageContents);
+			System.out.println("客戶接收到的單號:" + messageTransferNumber);
+
+			phletter.MT4oederSMSMessage(messageContents, messageTransferNumber , mitakLoginVal);
+
 		} catch (SQLException e) {
 			System.out.println("資料發生錯誤:" + e);
 		}

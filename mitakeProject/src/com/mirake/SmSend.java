@@ -48,10 +48,8 @@ public class SmSend extends HttpServlet {
 			java.util.Date d1 = null;
 			JSONArray jsonArray = JSONArray.fromObject(jsonStr);
 //			List<Object[]> batchArgs = new ArrayList<>();
-			
 			HashMap<String, Object> batchArgsMap = new HashMap<>();
 			
-
 			for (int i = 0; i < jsonArray.length(); i++) {
 				JSONObject jUser = jsonArray.getJSONObject(i);
 				String dateformat = jUser.getString("OrderOpenTime").toString();
