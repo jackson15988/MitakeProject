@@ -21,12 +21,16 @@ public class mirakeSmsThread extends Thread {
 
 	
 	public void run() {
-
+		
+		
+		Mt4ForxUtil utl = new Mt4ForxUtil();
+		String chineseSymbolName = utl.forexCorrectName(batchArgsMaps.get("OrderSymbol").toString());
+		String SymbolType =  utl.getSymbolChineseType(batchArgsMaps.get("OrderType").toString());
 		/* 這裡去組成下單資訊 */
 		StringBuffer body = new StringBuffer();
-		body.append("SymBol:" + batchArgsMaps.get("OrderSymbol") + "//" + "Price:" + batchArgsMaps.get("OrderOpenPrice")
-				+ "//Type:"+batchArgsMaps.get("OrderType"));
-		body.append("//Timer:"+batchArgsMaps.get("OrderOpenTimer") + " 投資一定有風險，請嚴設停損。");
+		body.append("品種:" + chineseSymbolName + "//" + "價格:" + batchArgsMaps.get("OrderOpenPrice") +"//" + "止損:" + batchArgsMaps.get("OrderStopLoss") +"//" + "止盈:" + batchArgsMaps.get("OrderTakeProfit")
+				+ "//Type:"+SymbolType);
+		body.append("//平台時間:"+batchArgsMaps.get("OrderOpenTimer") + "//  警語 :  投資一定有風險，請嚴設停損。");
 		String messageContents = body.toString();
 		String messageTransferNumber = (String) batchArgsMaps.get("OrderTicket");
 
@@ -40,7 +44,7 @@ public class mirakeSmsThread extends Thread {
 			System.out.println("客戶接收到的訊息:" + messageContents);
 			System.out.println("客戶接收到的單號:" + messageTransferNumber);
 
-			phletter.MT4oederSMSMessage(messageContents, messageTransferNumber , mitakLoginVal);
+//			phletter.MT4oederSMSMessage(messageContents, messageTransferNumber , mitakLoginVal);
 			
 		} catch (SQLException e) {
 			System.out.println("資料發生錯誤:" + e);

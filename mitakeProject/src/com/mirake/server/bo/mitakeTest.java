@@ -26,5 +26,14 @@ class mitakeTest {
 		}
 		PhoneNewsletter.MT4oederSMSMessage(messageContents, messageTransferNumber, mitakLoginVal);
 	}
+	
+	
+	@Test
+	void test2() {
+		Mt4ForxUtil  utl = new Mt4ForxUtil();
+		String ex = utl.forexCorrectName("EURJPY");
+		
+		System.out.println(ex);
+	}
 
 }
