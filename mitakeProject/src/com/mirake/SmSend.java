@@ -83,6 +83,7 @@ public class SmSend extends HttpServlet {
 			mirakeSmsThread meth = new mirakeSmsThread();  //NEW 多執行續
 			meth.setBatchArgsMaps(batchArgsMap);
 			meth.start();
+			
 		}
 
 	}
