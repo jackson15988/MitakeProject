@@ -114,7 +114,10 @@ response.sendRedirect("sign-in.jsp");
 								<th>會員編號</th>
 								<th>會員姓名</th>
 								<th>會員手機號碼</th>
+								<th>會員Email</th>
+								<th>會員居住地址</th>
 								<th>會員創建日期</th>
+								<th>會員到期日期</th>
 								<th style="width: 26px;"></th>
 							</tr>
 						</thead>
@@ -274,13 +277,26 @@ response.sendRedirect("sign-in.jsp");
 								var customerNumber = obj.customerNumber; //客戶號碼
 								var userName = obj.userName; // 客戶名稱
 								userName = unicodeToChar(userName);
+								var createTime = obj.createTime;
+								var address = obj.address; //會員居住地址
+								address = unicodeToChar(address);
+								var custEmail = obj.custEmail; //會員居住地址
 // 								var userID = obj[i].userID; 
-
-								str += "<tr> <td>15</td>";
+								var isMemberValid = obj.isMemberValid;
+								
+								if(isMemberValid == "N"){
+									str += "<tr  bgcolor='#FFC8B4'>";
+								}else{
+									str += "<tr>";
+								}
+								str += "<td>"+i+"</td>";
 								str += "<td>"+customerNumber+"</td>"  
 								str += "<td>"+userName+"</td>"  
 								str += "<td>"+userPhone+"</td>"  
-								str += "<td>20190608</td>"  
+								str += "<td>"+custEmail+"</td>"  
+								str += "<td>"+address+"</td>"  
+								str += "<td>"+createTime+"</td>"  
+								str += "<td>"+createTime+"</td>"  
 								str += "<td> <a href=''#myeditmember' role='button' data-toggle='editmember'><i class='icon-pencil'></i></a>"  
 								str += "<a href=''#myModal' role='button' data-toggle='modal'><i class='icon-remove'></i></a></td> </tr>"  
 
