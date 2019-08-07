@@ -273,6 +273,7 @@ response.sendRedirect("sign-in.jsp");
 								var userPhone = obj.UserPhone; //客戶手機
 								var customerNumber = obj.customerNumber; //客戶號碼
 								var userName = obj.userName; // 客戶名稱
+								userName = unicodeToChar(userName);
 // 								var userID = obj[i].userID; 
 
 								str += "<tr> <td>15</td>";
@@ -297,9 +298,14 @@ response.sendRedirect("sign-in.jsp");
 
 
 	
-		
-		
-		
+
+
+		function unicodeToChar(text) {
+		   return text.replace(/\\u[\dA-F]{4}/gi, 
+		          function (match) {
+		               return String.fromCharCode(parseInt(match.replace(/\\u/g, ''), 16));
+		          });
+		}
 		
 		
 		

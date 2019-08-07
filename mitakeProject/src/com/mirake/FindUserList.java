@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.mirake.server.bo.Mt4ForxUtil;
 import com.mirake.server.bo.mirakeBo;
 
 /**
@@ -42,17 +43,25 @@ public class FindUserList extends HttpServlet {
 			ResultSet result = stmt.executeQuery(sql);
 			HashMap<String, LinkedList<String>> maps = new HashMap<String, LinkedList<String>>();
 			PrintWriter out = response.getWriter();
+
 			while (result.next()) {
 				jsonObject.put("userID", result.getString("ID"));
 				jsonObject.put("customerNumber", result.getString("CUSTOMERNUMBER"));
-				jsonObject.put("userName", result.getString("USERNAME"));
+				jsonObject.put("userName", Mt4ForxUtil.stringtoUnicode(result.getString("USERNAME")));
 				jsonObject.put("UserPhone", result.getString("USERPHONE"));
+				jsonObject.put("createTime", result.getString("CREATETIME"));  //建立時間
+				jsonObject.put("address", result.getString("ADDRESS"));  //建立時間
+				jsonObject.put("custEmail", result.getString("USEREMAIL"));  //建立時間
+				jsonObject.put("customerBenefitExpires", result.getString("CUSTOMER_BENEFIT_EXPIRES"));  //客戶權益到期時間
+				jsonObject.put("isMemberValid", result.getString("IS_MEMBER_VALID"));  //客戶權益到期時間
+	
 				jsonArray.add(jsonObject.toJSONString());
 			}
-			response.setHeader("content-type", "text/html;charset=UTF-8");
+			response.setCharacterEncoding("utf-8");
+			response.setContentType("text/html; charset=utf-8");
 			out.print(jsonArray);
 			System.out.println(jsonArray);
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

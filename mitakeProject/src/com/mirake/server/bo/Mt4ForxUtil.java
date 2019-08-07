@@ -1,6 +1,9 @@
 package com.mirake.server.bo;
 
 import java.util.HashMap;
+
+import org.apache.commons.lang.StringUtils;
+
 import java.util.LinkedList;
 import java.util.Map.Entry;
 
@@ -68,7 +71,7 @@ public class Mt4ForxUtil {
 		switch (type) {
 		case "0":
 			chineseType = "買入(Buy)";
-		
+
 			break;
 		case "1":
 			chineseType = "賣出(Sell)";
@@ -88,6 +91,36 @@ public class Mt4ForxUtil {
 		}
 
 		return chineseType;
+
+	}
+
+	public static String stringtoUnicode(String string) {
+
+		if (StringUtils.isBlank(string)) {
+			return null;
+		}
+
+		char[] bytes = string.toCharArray();
+		StringBuffer unicode = new StringBuffer();
+		for (int i = 0; i < bytes.length; i++) {
+			char c = bytes[i];
+
+			// 标准ASCII范围内的字符，直接输出
+			if (c >= 0 && c <= 127) {
+				unicode.append(c);
+				continue;
+			}
+			String hexString = Integer.toHexString(bytes[i]);
+
+			unicode.append("\\u");
+
+			// 不够四位进行补0操作
+			if (hexString.length() < 4) {
+				unicode.append("0000".substring(hexString.length(), 4));
+			}
+			unicode.append(hexString);
+		}
+		return unicode.toString();
 
 	}
 
