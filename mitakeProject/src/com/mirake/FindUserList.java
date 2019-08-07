@@ -1,6 +1,8 @@
 package com.mirake;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.Writer;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,9 +17,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.mirake.server.bo.mirakeBo;
-
-import net.sf.json.JSONArray;
 
 /**
  * Servlet implementation class FindUserList
@@ -33,21 +35,25 @@ public class FindUserList extends HttpServlet {
 		Connection conn = getConection.getJDBCConneciton();
 
 		try {
+			JSONArray jsonArray = new JSONArray();
+			JSONObject jsonObject = new JSONObject();
 			stmt = conn.createStatement();
 			String sql = "SELECT * FROM fo_customerlist ;";
 			ResultSet result = stmt.executeQuery(sql);
 			HashMap<String, LinkedList<String>> maps = new HashMap<String, LinkedList<String>>();
-
+			PrintWriter out = response.getWriter();
 			while (result.next()) {
-				LinkedList<String> linkVal = new LinkedList<>();
-				linkVal.add(result.getString("ID"));
-				linkVal.add(result.getString("CUSTOMERNUMBER"));
-				linkVal.add(result.getString("USERNAME"));
-				linkVal.add(result.getString("USERPHONE"));
-				maps.put(result.getString("CUSTOMERNUMBER"), linkVal);
+				jsonObject.put("id", result.getString("ID"));
+				jsonObject.put("customerNumber", result.getString("CUSTOMERNUMBER"));
+				jsonObject.put("userName", result.getString("USERNAME"));
+				jsonObject.put("UserPhone", result.getString("USERPHONE"));
+				jsonArray.add(jsonObject);
 			}
-			JSONArray mJSONArray = new JSONArray(Arrays.asList(maps));
-			System.out.println(mJSONArray);
+			response.setHeader("content-type", "text/html;charset=UTF-8");
+			
+			out.print(jsonArray);
+
+			System.out.println(jsonArray);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
