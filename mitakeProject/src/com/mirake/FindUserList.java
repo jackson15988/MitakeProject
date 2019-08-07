@@ -43,17 +43,16 @@ public class FindUserList extends HttpServlet {
 			HashMap<String, LinkedList<String>> maps = new HashMap<String, LinkedList<String>>();
 			PrintWriter out = response.getWriter();
 			while (result.next()) {
-				jsonObject.put("id", result.getString("ID"));
+				jsonObject.put("userID", result.getString("ID"));
 				jsonObject.put("customerNumber", result.getString("CUSTOMERNUMBER"));
 				jsonObject.put("userName", result.getString("USERNAME"));
 				jsonObject.put("UserPhone", result.getString("USERPHONE"));
-				jsonArray.add(jsonObject);
+				jsonArray.add(jsonObject.toJSONString());
 			}
 			response.setHeader("content-type", "text/html;charset=UTF-8");
-			
 			out.print(jsonArray);
-
 			System.out.println(jsonArray);
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

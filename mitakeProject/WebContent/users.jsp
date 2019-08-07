@@ -119,68 +119,7 @@ response.sendRedirect("sign-in.jsp");
 							</tr>
 						</thead>
 						<tbody id="trhead">
-							<tr>
-								<td>1</td>
-								<td>1</td>
-								<td>Mark</td>
-								<td>Tompson</td>
-								<td>the_mark7</td>
-								<td>
-								<a href="#myeditmember" role="button" data-toggle="editmember"><i class="icon-pencil"></i></a> 
-								<a href="#myModal" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
-								</td>
-							</tr>
-							<tr>
-								<td>1</td>
-								<td>2</td>
-								<td>Ashley</td>
-								<td>Jacobs</td>
-								<td>ash11927</td>
-								<td>
-								<a href="#myModal" role="button" data-toggle="modal"><i class="icon-pencil"></i></a> 
-								<a href="#myModal" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
-								</td>
-							</tr>
-							<tr>
-								<td>1</td>
-								<td>3</td>
-								<td>Audrey</td>
-								<td>Ann</td>
-								<td>audann84</td>
-								<td><a href="user.html"><i class="icon-pencil"></i></a> <a
-									href="#myModal" role="button" data-toggle="modal"><i
-										class="icon-remove"></i></a></td>
-							</tr>
-							<tr>
-								<td>1</td>
-								<td>4</td>
-								<td>John</td>
-								<td>Robinson</td>
-								<td>jr5527</td>
-								<td><a href="user.html"><i class="icon-pencil"></i></a> <a
-									href="#myModal" role="button" data-toggle="modal"><i
-										class="icon-remove"></i></a></td>
-							</tr>
-							<tr>
-								<td>1</td>
-								<td>5</td>
-								<td>Aaron</td>
-								<td>Butler</td>
-								<td>aaron_butler</td>
-								<td><a href="user.html"><i class="icon-pencil"></i></a> <a
-									href="#myModal" role="button" data-toggle="modal"><i
-										class="icon-remove"></i></a></td>
-							</tr>
-							<tr>
-								<td>1</td>
-								<td>6</td>
-								<td>Chris</td>
-								<td>Albert</td>
-								<td>cab79</td>
-								<td><a href="user.html"><i class="icon-pencil"></i></a> <a
-									href="#myModal" role="button" data-toggle="modal"><i
-										class="icon-remove"></i></a></td>
-							</tr>
+						
 						</tbody>
 					</table>
 				</div>
@@ -330,32 +269,20 @@ response.sendRedirect("sign-in.jsp");
 
 							for (var i = 0; i < data.length; i++) {
 								var str = "";
-								var numberofPensgap = data[i].TOTAL_BID_CONTRACT
-										- data[i].TOTAL_ASK_CONTRACT;
-								var lotPensgap = data[i].TOTAL_BID_SIZE
-										- data[i].TOTAL_ASK_SIZE;
-								console.log('筆數差別' + numberofPensgap);
-								var timetodate = getMyDate(parseInt(data[i].CREATE_DATE));
-								str += "<tr class='odd'></tr><td class='sorting_1'>"
-										+ timetodate + "</td>";
-								str += "<td class='sorting_2'>" + data[i].ID
-										+ "</td>"
-								if (numberofPensgap > 0) {
-									str += "<td class='sorting_3'><span class='label label-important'>"
-											+ numberofPensgap + "</span></td> "
-								} else {
-									str += "<td class='sorting_3'><span class='label label-success'>"
-											+ numberofPensgap + "</span></td> "
-								}
-								if (lotPensgap > 0) {
-									str += "<td class='sorting_4'><span class='label label-important'>"
-											+ lotPensgap + "</span></td>"
-								} else {
-									str += "<td class='sorting_4'><span class='label label-success'>"
-											+ lotPensgap + "</span></td>"
-								}
+								var obj = JSON.parse( data[i]);
+								var userPhone = obj.UserPhone; //客戶手機
+								var customerNumber = obj.customerNumber; //客戶號碼
+								var userName = obj.userName; // 客戶名稱
+// 								var userID = obj[i].userID; 
 
-								str += "<td class=''></td>"
+								str += "<tr> <td>15</td>";
+								str += "<td>"+customerNumber+"</td>"  
+								str += "<td>"+userName+"</td>"  
+								str += "<td>"+userPhone+"</td>"  
+								str += "<td>20190608</td>"  
+								str += "<td> <a href=''#myeditmember' role='button' data-toggle='editmember'><i class='icon-pencil'></i></a>"  
+								str += "<a href=''#myModal' role='button' data-toggle='modal'><i class='icon-remove'></i></a></td> </tr>"  
+
 								$('#trhead').append(str);
 							}
 						},
@@ -364,7 +291,7 @@ response.sendRedirect("sign-in.jsp");
 						}
 					});
 
-			var inserDiv = "<tr class='odd'></tr><td class='sorting_1'>Allan</td><td class='sorting_2'>06-04-2012</td><td class='sorting_3'><span class='label'>Inactive</span></td> <td class='sorting_4'><span class='label'>Inactive</span></td><td class=''></td>";
+			
 			// 			$('#trhead').append(str);
 		}
 
