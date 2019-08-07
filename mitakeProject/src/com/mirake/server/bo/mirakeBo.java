@@ -19,8 +19,7 @@ public class mirakeBo {
 
 	public static void main(String[] args) throws SQLException {
 		HashMap<String, LinkedList<String>> testVal = new HashMap<>();
-		
-		
+
 		testVal = mirakeBo.getCustInformation();
 		System.out.println(testVal.get("MTK1624089311"));
 //		testVal.put("USERNAME", "王阳明");
@@ -236,7 +235,7 @@ public class mirakeBo {
 			stmt = conn.createStatement();
 			String sql = "SELECT ID,CUSTOMERNUMBER,USERNAME,USERPHONE FROM fo_customerlist ;";
 			ResultSet result = stmt.executeQuery(sql);
-			
+
 			while (result.next()) {
 				LinkedList<String> linkVal = new LinkedList<>();
 				linkVal.add(result.getString("ID"));
@@ -255,6 +254,34 @@ public class mirakeBo {
 		}
 
 		return custHashMap;
+	}
+
+	/**
+	 * @author admin 取得JDBC 連線設定 統整在這裡 2019/08/04 過濾掉不必要的 攏CODE
+	 * 
+	 * @return
+	 */
+	public static Connection getJDBCConneciton() {
+		Connection conn = null;
+
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			System.out.println("取得JDBC clas失敗 " + e);
+		}
+		// System.out.println("連接成功MySQLToJava");
+		// 建立讀取資料庫 (test 為資料庫名稱; user 為MySQL使用者名稱; passwrod 為MySQL使用者密碼)
+		String datasource = "jdbc:mysql://45.32.49.87:3306/myforex?user=root&password=36f57bc6fd&useSSL=false&serverTimezone=UTC&characterEncoding=UTF-8";
+		// 以下的資料庫操作請參考本blog中: "使用 Java 連結與存取 access 資料庫 (JDBC)"
+		try {
+			conn = DriverManager.getConnection(datasource);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("取得JDBC 連驗過程中發生 SQL錯誤" + e);
+		}
+
+		return conn;
+
 	}
 
 }

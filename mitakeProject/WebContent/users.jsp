@@ -107,7 +107,7 @@ response.sendRedirect("sign-in.jsp");
 					<div class="btn-group"></div>
 				</div>
 				<div class="well">
-					<table class="table">
+					<table class="table"  >
 						<thead>
 							<tr>
 								<th>#</th>
@@ -118,7 +118,7 @@ response.sendRedirect("sign-in.jsp");
 								<th style="width: 26px;"></th>
 							</tr>
 						</thead>
-						<tbody>
+						<tbody id="trhead">
 							<tr>
 								<td>1</td>
 								<td>1</td>
@@ -295,6 +295,87 @@ response.sendRedirect("sign-in.jsp");
                 }
             });
         }
+		
+		
+		
+		
+		
+		window.onload = function() {
+			loadingData();
+		}
+
+		function loadingData() {
+			$("#trhead").empty();
+	
+
+			var user = {
+				"email" : "123456",
+				"industry" : 1,
+				"corporation" : "hust"
+			};
+			$.ajax({
+						type : "POST",
+						url : "/mitakeProject/FindUserList",
+						dataType : "json",
+						contentType : "application/json",
+						data : JSON.stringify(user),
+						success : function(data) {
+							var id = data[0].ID;
+							var created = data[0].CREATE_DATE;
+							console.log(created + ":" + id);
+							// 	            	 TOTAL_ASK_CONTRACT
+							// 	            	 TOTAL_ASK_SIZE
+							// 	            	 TOTAL_BID_CONTRACT
+							// 	            	 TOTAL_BID_SIZE
+
+							for (var i = 0; i < data.length; i++) {
+								var str = "";
+								var numberofPensgap = data[i].TOTAL_BID_CONTRACT
+										- data[i].TOTAL_ASK_CONTRACT;
+								var lotPensgap = data[i].TOTAL_BID_SIZE
+										- data[i].TOTAL_ASK_SIZE;
+								console.log('筆數差別' + numberofPensgap);
+								var timetodate = getMyDate(parseInt(data[i].CREATE_DATE));
+								str += "<tr class='odd'></tr><td class='sorting_1'>"
+										+ timetodate + "</td>";
+								str += "<td class='sorting_2'>" + data[i].ID
+										+ "</td>"
+								if (numberofPensgap > 0) {
+									str += "<td class='sorting_3'><span class='label label-important'>"
+											+ numberofPensgap + "</span></td> "
+								} else {
+									str += "<td class='sorting_3'><span class='label label-success'>"
+											+ numberofPensgap + "</span></td> "
+								}
+								if (lotPensgap > 0) {
+									str += "<td class='sorting_4'><span class='label label-important'>"
+											+ lotPensgap + "</span></td>"
+								} else {
+									str += "<td class='sorting_4'><span class='label label-success'>"
+											+ lotPensgap + "</span></td>"
+								}
+
+								str += "<td class=''></td>"
+								$('#trhead').append(str);
+							}
+						},
+						error : function(err) {
+							alert('AJAX獲取數據失敗' + err);
+						}
+					});
+
+			var inserDiv = "<tr class='odd'></tr><td class='sorting_1'>Allan</td><td class='sorting_2'>06-04-2012</td><td class='sorting_3'><span class='label'>Inactive</span></td> <td class='sorting_4'><span class='label'>Inactive</span></td><td class=''></td>";
+			// 			$('#trhead').append(str);
+		}
+
+
+	
+		
+		
+		
+		
+		
+		
 		
 		
 	</script>
