@@ -19,6 +19,13 @@
 
 <script src="lib/jquery-1.7.2.min.js" type="text/javascript"></script>
 
+<!--引入 日期套件 -->
+<link rel="stylesheet" href="js/bootstrap-datetimepicker.js"
+	rel="external nofollow">
+<script src="js/bootstrap-datetimepicker.min.js"></script>
+
+<link href="css/bootstrap-datetimepicker.css" rel="stylesheet" media="screen">
+<link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
 <!-- Demo page code -->
 
 <style type="text/css">
@@ -63,10 +70,10 @@
 
 
 <%
-String account = (String)session.getAttribute("account");
-if (account == null ){
-response.sendRedirect("sign-in.jsp"); 
-}
+	String account = (String) session.getAttribute("account");
+	if (account == null) {
+		response.sendRedirect("sign-in.jsp");
+	}
 %>
 
 <!--[if lt IE 7 ]> <body class="ie ie6"> <![endif]-->
@@ -102,12 +109,12 @@ response.sendRedirect("sign-in.jsp");
 						data-target="#myModal">
 						<i class="icon-plus"></i>添加新會員
 					</button>
-<!-- 					<button class="btn">Import</button> -->
-<!-- 					<button class="btn">Export</button> -->
+					<!-- 					<button class="btn">Import</button> -->
+					<!-- 					<button class="btn">Export</button> -->
 					<div class="btn-group"></div>
 				</div>
 				<div class="well">
-					<table class="table"  >
+					<table class="table">
 						<thead>
 							<tr>
 								<th>#</th>
@@ -122,7 +129,7 @@ response.sendRedirect("sign-in.jsp");
 							</tr>
 						</thead>
 						<tbody id="trhead">
-						
+
 						</tbody>
 					</table>
 				</div>
@@ -161,30 +168,40 @@ response.sendRedirect("sign-in.jsp");
 									aria-hidden="true">&times;</button>
 								<h4 class="modal-title" id="myModalLabel">添加新的會員</h4>
 							</div>
-						<form id="form1" onsubmit="return false" action="##" method="post">
-							<div class="modal-body">
-									<label>會員姓名</label> <input type="text"  name="username"
+							<form id="form1" onsubmit="return false" action="##"
+								method="post">
+								<div class="modal-body">
+									<label>會員姓名</label> <input type="text" name="username"
 										class="input-xlarge"> <label>會員手機號碼</label> <input
 										type="text" name="userPhone" class="input-xlarge"> <label>EMAIL</label>
-									<input type="text" name="email" class="input-xlarge"> <label>地址</label>
+									<input type="text" name="email" class="input-xlarge"> <label>會員到期日期</label>
+
+									<div class="input-append date form_datetime" >
+										<input size="16" type="text" value="" name="custMemberDataTime"  readonly > <span
+											class="add-on"><i class="icon-remove"></i></span> <span
+											class="add-on"><i class="icon-calendar"></i></span>
+									</div>
+
+									<label>地址</label>
 									<textarea name="address" rows="3" class="input-xlarge"></textarea>
-							
-							</div>
-							
+
+								</div>
+
 								<div class="modal-footer">
-								<button type="button" class="btn btn-default"
-									data-dismiss="modal">关闭</button>
-								<button type="button" class="btn btn-primary" onclick="addmemberInformation()"> 提交更改</button>
-							</div>
-							
+									<button type="button" class="btn btn-default"
+										data-dismiss="modal">关闭</button>
+									<button type="button" class="btn btn-primary"
+										onclick="addmemberInformation()">提交更改</button>
+								</div>
+
 							</form>
 						</div>
 						<!-- /.modal-content -->
 					</div>
 					<!-- /.modal -->
 				</div>
-				
-<footer>
+
+				<footer>
 				<hr>
 
 				<!-- Purchase a site license to remove this link from the footer: http://www.portnine.com/bootstrap-themes -->
@@ -204,8 +221,8 @@ response.sendRedirect("sign-in.jsp");
 	</div>
 
 
-<script src="js/jquery-1.11.0.min.js" type="text/javascript"></script>
-<script type="text/javascript" src="js/jquery.notify.js"></script>
+	<script src="js/jquery-1.11.0.min.js" type="text/javascript"></script>
+	<script type="text/javascript" src="js/jquery.notify.js"></script>
 	<script src="lib/bootstrap/js/bootstrap.js"></script>
 	<script type="text/javascript">
 		$("[rel=tooltip]").tooltip();
@@ -214,48 +231,42 @@ response.sendRedirect("sign-in.jsp");
 				return false;
 			});
 		});
-		
-		
-		
+
 		function addmemberInformation() {
-            $.ajax({
-            //几个参数需要注意一下
-                type: "POST",//方法类型
-                dataType: "json",//预期服务器返回的数据类型
-                url: "/mitakeProject/addNewUser" ,//url
-                data: $('#form1').serialize(),
-                success: function (result) {
-                    console.log(result);//打印服务端返回的数据(调试用)
-          
-                    if (result.resultCode == 200) {
-                        alert("SUCCESS");
-                    }
-                    ;
-                },
-                error : function() {
-                    alert("异常！");
-                }
-            });
-        }
-		
-		
-		
-		
-		
+			$.ajax({
+				//几个参数需要注意一下
+				type : "POST",//方法类型
+				dataType : "json",//预期服务器返回的数据类型
+				url : "/mitakeProject/addNewUser",//url
+				data : $('#form1').serialize(),
+				success : function(result) {
+					console.log(result);//打印服务端返回的数据(调试用)
+
+					if (result.resultCode == 200) {
+						alert("SUCCESS");
+					}
+					;
+				},
+				error : function() {
+					alert("异常！");
+				}
+			});
+		}
+
 		window.onload = function() {
 			loadingData();
 		}
 
 		function loadingData() {
 			$("#trhead").empty();
-	
 
 			var user = {
 				"email" : "123456",
 				"industry" : 1,
 				"corporation" : "hust"
 			};
-			$.ajax({
+			$
+					.ajax({
 						type : "POST",
 						url : "/mitakeProject/FindUserList",
 						dataType : "json",
@@ -272,7 +283,7 @@ response.sendRedirect("sign-in.jsp");
 
 							for (var i = 0; i < data.length; i++) {
 								var str = "";
-								var obj = JSON.parse( data[i]);
+								var obj = JSON.parse(data[i]);
 								var userPhone = obj.UserPhone; //客戶手機
 								var customerNumber = obj.customerNumber; //客戶號碼
 								var userName = obj.userName; // 客戶名稱
@@ -281,24 +292,24 @@ response.sendRedirect("sign-in.jsp");
 								var address = obj.address; //會員居住地址
 								address = unicodeToChar(address);
 								var custEmail = obj.custEmail; //會員居住地址
-// 								var userID = obj[i].userID; 
+								// 								var userID = obj[i].userID; 
 								var isMemberValid = obj.isMemberValid;
-								
-								if(isMemberValid == "N"){
+
+								if (isMemberValid == "N") {
 									str += "<tr  bgcolor='#FFC8B4'>";
-								}else{
+								} else {
 									str += "<tr>";
 								}
-								str += "<td>"+i+"</td>";
-								str += "<td>"+customerNumber+"</td>"  
-								str += "<td>"+userName+"</td>"  
-								str += "<td>"+userPhone+"</td>"  
-								str += "<td>"+custEmail+"</td>"  
-								str += "<td>"+address+"</td>"  
-								str += "<td>"+createTime+"</td>"  
-								str += "<td>"+createTime+"</td>"  
-								str += "<td> <a href=''#myeditmember' role='button' data-toggle='editmember'><i class='icon-pencil'></i></a>"  
-								str += "<a href=''#myModal' role='button' data-toggle='modal'><i class='icon-remove'></i></a></td> </tr>"  
+								str += "<td>" + i + "</td>";
+								str += "<td>" + customerNumber + "</td>"
+								str += "<td>" + userName + "</td>"
+								str += "<td>" + userPhone + "</td>"
+								str += "<td>" + custEmail + "</td>"
+								str += "<td>" + address + "</td>"
+								str += "<td>" + createTime + "</td>"
+								str += "<td>" + createTime + "</td>"
+								str += "<td> <a href=''#myeditmember' role='button' data-toggle='editmember'><i class='icon-pencil'></i></a>"
+								str += "<a href=''#myModal' role='button' data-toggle='modal'><i class='icon-remove'></i></a></td> </tr>"
 
 								$('#trhead').append(str);
 							}
@@ -308,25 +319,27 @@ response.sendRedirect("sign-in.jsp");
 						}
 					});
 
-			
 			// 			$('#trhead').append(str);
 		}
 
-
-	
-
-
 		function unicodeToChar(text) {
-		   return text.replace(/\\u[\dA-F]{4}/gi, 
-		          function (match) {
-		               return String.fromCharCode(parseInt(match.replace(/\\u/g, ''), 16));
-		          });
+			return text.replace(/\\u[\dA-F]{4}/gi, function(match) {
+				return String.fromCharCode(parseInt(match.replace(/\\u/g, ''),
+						16));
+			});
 		}
-		
-		
-		
-		
-		
+	</script>
+	
+	
+	
+	<script type="text/javascript">
+		$(".form_datetime").datetimepicker({
+			format : "dd-MM-yyyy hh:ii",
+			autoclose : true,
+			todayBtn : true,
+			startDate : "2013-02-14 10:00",
+			minuteStep : 10
+		});
 	</script>
 
 </body>

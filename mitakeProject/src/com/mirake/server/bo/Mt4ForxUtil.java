@@ -1,14 +1,31 @@
 package com.mirake.server.bo;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 
 import org.apache.commons.lang.StringUtils;
 
 import java.util.LinkedList;
+import java.util.Locale;
 import java.util.Map.Entry;
 
 public class Mt4ForxUtil {
-
+		
+	
+	public static void main(String[] args) {
+		String dx;
+		try {
+			dx = Mt4ForxUtil.timeFormat("31-July-2019 06:50");
+		
+		System.out.println("正確" + dx);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public String forexCorrectName(String Symbol) {
 
 		String chineseName = "";
@@ -121,6 +138,23 @@ public class Mt4ForxUtil {
 			unicode.append(hexString);
 		}
 		return unicode.toString();
+
+	}
+
+	public static String timeFormat(String getData) throws ParseException {
+		
+		
+		Locale locale = Locale.US; 
+    
+        SimpleDateFormat frm = new SimpleDateFormat("dd-MMM-yyyy HH:mm",Locale.ENGLISH); 
+        Date date = frm.parse(getData); 
+        
+     
+
+        SimpleDateFormat frm1 = new SimpleDateFormat("yyyy/MM/dd HH:mm", locale); 
+        System.out.println("reformat : " +  frm1.format(date));
+		return   frm1.format(date); 
+		
 
 	}
 

@@ -2,6 +2,8 @@ package com.mirake;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 
 import javax.servlet.ServletException;
@@ -10,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.mirake.server.bo.Mt4ForxUtil;
 import com.mirake.server.bo.mirakeBo;
 
 /**
@@ -25,7 +28,17 @@ public class addNewUser extends HttpServlet {
 		String userPhone = request.getParameter("userPhone");
 		String email = request.getParameter("email");
 		String address = request.getParameter("address");
-
+		String expirationTimer  =request.getParameter("custMemberDataTime");
+		
+		try {
+			expirationTimer = Mt4ForxUtil.timeFormat(expirationTimer);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("權益到期間:" + expirationTimer);
+		
+		
 		HashMap<String, Object> inserVal = new HashMap<>();
 		inserVal.put("USERNAME", userName);
 		inserVal.put("USERPHONE", userPhone);
