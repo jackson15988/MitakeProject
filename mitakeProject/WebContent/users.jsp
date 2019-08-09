@@ -200,6 +200,81 @@
 					</div>
 					<!-- /.modal -->
 				</div>
+				
+				
+				
+				
+				
+					<div class="modal fade" id="editmember" tabindex="-1" role="dialog"
+					aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal"
+									aria-hidden="true">&times;</button>
+								<h4 class="modal-title" id="myModalLabel">編輯會員資料</h4>
+							</div>
+							<form id="form1" onsubmit="return false" action="##"
+								method="post">
+								<div class="modal-body">
+									<label>會員姓名</label> <input type="text" name="username"
+										class="input-xlarge"> <label>會員手機號碼</label> <input
+										type="text" name="userPhone" class="input-xlarge"> <label>EMAIL</label>
+									<input type="text" name="email" class="input-xlarge"> 
+									
+									<label>會員到期日期</label>
+
+									<div class="input-append date form_datetime" >
+										<input size="16" type="text" value="" name="custMemberDataTime"  readonly > <span
+											class="add-on"><i class="icon-remove"></i></span> <span
+											class="add-on"><i class="icon-calendar"></i></span>
+									</div>
+									
+									
+									<label>地址</label>
+									<textarea name="address" rows="3" class="input-xlarge"></textarea>
+
+								</div>
+
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default"
+										data-dismiss="modal">关闭</button>
+									<button type="button" class="btn btn-primary"
+										onclick="addmemberInformation()">提交更改</button>
+								</div>
+
+							</form>
+						</div>
+						<!-- /.modal-content -->
+					</div>
+					<!-- /.modal -->
+				</div>
+				
+				
+				
+				
+						<div class="modal fade" id="delectMember" tabindex="-1"
+					role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal"
+									aria-hidden="true">&times;</button>
+								<h4 class="modal-title" id="myModalLabel">刪除會員資料</h4>
+							</div>
+							<div class="modal-body">在这里添加一些文本</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default"
+									data-dismiss="modal">取消</button>
+								<button type="button" class="btn btn-primary">確定</button>
+							</div>
+						</div>
+						<!-- /.modal-content -->
+					</div>
+
+				</div>
+				
+				
 
 				<footer>
 				<hr>
@@ -221,8 +296,7 @@
 	</div>
 
 
-	<script src="js/jquery-1.11.0.min.js" type="text/javascript"></script>
-	<script type="text/javascript" src="js/jquery.notify.js"></script>
+
 	<script src="lib/bootstrap/js/bootstrap.js"></script>
 	<script type="text/javascript">
 		$("[rel=tooltip]").tooltip();
@@ -242,8 +316,10 @@
 				success : function(result) {
 					console.log(result);//打印服务端返回的数据(调试用)
 
-					if (result.resultCode == 200) {
-						alert("SUCCESS");
+					if (result.code == 0) {
+						alert("添加成功");
+						$("#myModal .close").click()
+						loadingData();
 					}
 					;
 				},
@@ -308,8 +384,8 @@
 								str += "<td>" + address + "</td>"
 								str += "<td>" + createTime + "</td>"
 								str += "<td>" + createTime + "</td>"
-								str += "<td> <a href=''#myeditmember' role='button' data-toggle='editmember'><i class='icon-pencil'></i></a>"
-								str += "<a href=''#myModal' role='button' data-toggle='modal'><i class='icon-remove'></i></a></td> </tr>"
+								str += "<td> <a href=''#myeditmember' role='button'  data-toggle='modal' data-target='#editmember'><i class='icon-pencil' ></i></a>"	
+								str += "<a href=''#' onclick='handler("+ customerNumber +"); role='button'   data-toggle='modal' data-target='#delectMember' ><i class='icon-remove'></i></a></td> </tr>"
 
 								$('#trhead').append(str);
 							}
@@ -340,6 +416,13 @@
 			startDate : "2013-02-14 10:00",
 			minuteStep : 10
 		});
+		
+		
+		
+		function handler(id){
+			
+			 alert(id);
+		}
 	</script>
 
 </body>

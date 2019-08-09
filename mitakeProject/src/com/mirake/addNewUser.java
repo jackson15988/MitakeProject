@@ -44,6 +44,7 @@ public class addNewUser extends HttpServlet {
 		inserVal.put("USERPHONE", userPhone);
 		inserVal.put("USEREMAIL", email);
 		inserVal.put("ADDRESS", address);
+		inserVal.put("CUST_MEMBER_DATATIME", expirationTimer);
 		java.util.Random rnd = new java.util.Random();
 		rnd.setSeed(System.currentTimeMillis());
 		inserVal.put("CUSTOMERNUMBER", "MTK" + rnd.nextInt());
@@ -61,7 +62,7 @@ public class addNewUser extends HttpServlet {
 		PrintWriter out = response.getWriter();
 
 		if (resultCdoe.equals("0")) {
-			String str = "{\"code\":\"-1\",\"message\":\"錯誤\"}";
+			String str = "{\"code\":\"0\",\"message\":\"新增成功\"}";
 			out.println(str);
 		} else
 

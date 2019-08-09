@@ -151,7 +151,7 @@ public class Mt4ForxUtil {
         
      
 
-        SimpleDateFormat frm1 = new SimpleDateFormat("yyyy/MM/dd HH:mm", locale); 
+        SimpleDateFormat frm1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", locale); 
         System.out.println("reformat : " +  frm1.format(date));
 		return   frm1.format(date); 
 		

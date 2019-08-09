@@ -48,9 +48,9 @@ public class mirakeBo {
 			System.out.println("連接成功MySQL");
 			stmt = conn.createStatement();
 
-			String sql = "INSERT INTO `fo_customerlist` (`USERNAME`, `USERPHONE`, `USEREMAIL`, `ADDRESS` ,`CREATETIME`, `CUSTOMERNUMBER`) VALUES ('"
+			String sql = "INSERT INTO `fo_customerlist` (`USERNAME`, `USERPHONE`, `USEREMAIL`, `ADDRESS` ,`CREATETIME`, `CUSTOMERNUMBER` ,`CUSTOMER_BENEFIT_EXPIRES`) VALUES ('"
 					+ inserVal.get("USERNAME") + "', '" + inserVal.get("USERPHONE") + "', '" + inserVal.get("USEREMAIL")
-					+ "', '" + inserVal.get("ADDRESS") + "' , NOW(),'" + inserVal.get("CUSTOMERNUMBER") + "');";
+					+ "', '" + inserVal.get("ADDRESS") + "' , NOW(),'" + inserVal.get("CUSTOMERNUMBER") + "','"+ inserVal.get("CUST_MEMBER_DATATIME")+"');";
 
 			System.out.println("使用DB语法:" + sql);
 			stmt.executeUpdate(sql);
