@@ -49,12 +49,12 @@ public class FindUserList extends HttpServlet {
 				jsonObject.put("customerNumber", result.getString("CUSTOMERNUMBER"));
 				jsonObject.put("userName", Mt4ForxUtil.stringtoUnicode(result.getString("USERNAME")));
 				jsonObject.put("UserPhone", result.getString("USERPHONE"));
-				jsonObject.put("createTime", result.getString("CREATETIME"));  //建立時間
-				jsonObject.put("address",  Mt4ForxUtil.stringtoUnicode(result.getString("ADDRESS")));  //建立時間
-				jsonObject.put("custEmail", result.getString("USEREMAIL"));  //建立時間
-				jsonObject.put("customerBenefitExpires", result.getString("CUSTOMER_BENEFIT_EXPIRES"));  //客戶權益到期時間
-				jsonObject.put("isMemberValid", result.getString("IS_MEMBER_VALID"));  //客戶權益到期時間
-	
+				jsonObject.put("createTime", result.getString("CREATETIME")); // 建立時間
+				jsonObject.put("address", Mt4ForxUtil.stringtoUnicode(result.getString("ADDRESS"))); // 建立時間
+				jsonObject.put("custEmail", result.getString("USEREMAIL")); // 建立時間
+				jsonObject.put("customerBenefitExpires", result.getString("CUSTOMER_BENEFIT_EXPIRES")); // 客戶權益到期時間
+				jsonObject.put("isMemberValid", result.getString("IS_MEMBER_VALID")); // 客戶權益到期時間
+
 				jsonArray.add(jsonObject.toJSONString());
 			}
 			response.setCharacterEncoding("utf-8");
@@ -63,9 +63,21 @@ public class FindUserList extends HttpServlet {
 			System.out.println(jsonArray);
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			try {
+				conn.close();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
+
 	}
 
 }

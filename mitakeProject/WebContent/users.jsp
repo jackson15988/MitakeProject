@@ -262,11 +262,12 @@
 									aria-hidden="true">&times;</button>
 								<h4 class="modal-title" id="myModalLabel">刪除會員資料</h4>
 							</div>
-							<div class="modal-body">在这里添加一些文本</div>
+							<div class="modal-body" id="delectNumber"></div>
+							<input size="16" type="text" value="" name="hiddenVal"   id="hiddenVal" style="display:none"/>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-default"
 									data-dismiss="modal">取消</button>
-								<button type="button" class="btn btn-primary">確定</button>
+								<button type="button" class="btn btn-primary"  onclick="delectMemberInformation()">確定</button>
 							</div>
 						</div>
 						<!-- /.modal-content -->
@@ -368,6 +369,7 @@
 								var address = obj.address; //會員居住地址
 								address = unicodeToChar(address);
 								var custEmail = obj.custEmail; //會員居住地址
+								var customerBenefitExpires = obj.customerBenefitExpires;
 								// 								var userID = obj[i].userID; 
 								var isMemberValid = obj.isMemberValid;
 
@@ -383,9 +385,16 @@
 								str += "<td>" + custEmail + "</td>"
 								str += "<td>" + address + "</td>"
 								str += "<td>" + createTime + "</td>"
-								str += "<td>" + createTime + "</td>"
+								str += "<td>" + customerBenefitExpires + "</td>"
 								str += "<td> <a href=''#myeditmember' role='button'  data-toggle='modal' data-target='#editmember'><i class='icon-pencil' ></i></a>"	
-								str += "<a href=''#' onclick='handler("+ customerNumber +"); role='button'   data-toggle='modal' data-target='#delectMember' ><i class='icon-remove'></i></a></td> </tr>"
+								str += "<a href=''#' role='button'   data-toggle='modal' data-target='#delectMember'"
+								str += "onclick='editAddress("
+								str += "/"+customerNumber+"/"
+								str += ")'"
+								str += "><i class='icon-remove'></i></a></td> </tr>"
+			
+								
+								
 
 								$('#trhead').append(str);
 							}
@@ -417,11 +426,47 @@
 			minuteStep : 10
 		});
 		
+
+		function editAddress(id,obj){	
+			var str = id.toString();
+			str = str.substring(0, str.length-1);  //1234567
+			str = str.substring(1,str.length);
+			$("#hiddenVal").val(str);
+			$("#delectNumber").text("您確定要刪除這個帳號嗎? :"+str);
+			}
 		
 		
-		function handler(id){
+		function delectMemberInformation(){
+			var getValue = $("#hiddenVal").val();
 			
-			 alert(id);
+			var user = {
+					"userNumber" : getValue,
+					"cdoe" : "0",
+					"message" : "delectnumber"
+				};
+			
+			
+			$.ajax({
+				//几个参数需要注意一下
+				type : "POST",//方法类型
+				dataType : "json",//预期服务器返回的数据类型
+				url : "/mitakeProject/delectUser",//url
+				data : JSON.stringify(user),
+				success : function(result) {
+					console.log(result);//打印服务端返回的数据(调试用)
+
+					if (result.code == 0) {
+						alert("刪除成功");
+						$("#delectMember .close").click()
+						loadingData();
+					}
+					;
+				},
+				error : function() {
+					alert("异常！");
+				}
+			});
+
 		}
 	</script>
 
