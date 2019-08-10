@@ -24,8 +24,10 @@
 	rel="external nofollow">
 <script src="js/bootstrap-datetimepicker.min.js"></script>
 
-<link href="css/bootstrap-datetimepicker.css" rel="stylesheet" media="screen">
-<link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
+<link href="css/bootstrap-datetimepicker.css" rel="stylesheet"
+	media="screen">
+<link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet"
+	media="screen">
 <!-- Demo page code -->
 
 <style type="text/css">
@@ -176,8 +178,9 @@
 										type="text" name="userPhone" class="input-xlarge"> <label>EMAIL</label>
 									<input type="text" name="email" class="input-xlarge"> <label>會員到期日期</label>
 
-									<div class="input-append date form_datetime" >
-										<input size="16" type="text" value="" name="custMemberDataTime"  readonly > <span
+									<div class="input-append date form_datetime">
+										<input size="16" type="text" value=""
+											name="custMemberDataTime" readonly> <span
 											class="add-on"><i class="icon-remove"></i></span> <span
 											class="add-on"><i class="icon-calendar"></i></span>
 									</div>
@@ -200,12 +203,12 @@
 					</div>
 					<!-- /.modal -->
 				</div>
-				
-				
-				
-				
-				
-					<div class="modal fade" id="editmember" tabindex="-1" role="dialog"
+
+
+
+
+
+				<div class="modal fade" id="editmember" tabindex="-1" role="dialog"
 					aria-labelledby="myModalLabel" aria-hidden="true">
 					<div class="modal-dialog">
 						<div class="modal-content">
@@ -218,21 +221,20 @@
 								method="post">
 								<div class="modal-body">
 									<label>會員姓名</label> <input type="text" name="username"
-										class="input-xlarge"> <label>會員手機號碼</label> <input
-										type="text" name="userPhone" class="input-xlarge"> <label>EMAIL</label>
-									<input type="text" name="email" class="input-xlarge"> 
-									
-									<label>會員到期日期</label>
+										class="input-xlarge" id="edditName"> <label>會員手機號碼</label> <input
+										type="text" name="userPhone" class="input-xlarge" id="edditPhone"> <label>EMAIL</label>
+									<input type="text" name="email" class="input-xlarge" id="edditEmail"> <label>會員到期日期</label>
 
-									<div class="input-append date form_datetime" >
-										<input size="16" type="text" value="" name="custMemberDataTime"  readonly > <span
+									<div class="input-append date form_datetime">
+										<input size="16" type="text" value=""
+											name="custMemberDataTime" readonly> <span
 											class="add-on"><i class="icon-remove"></i></span> <span
 											class="add-on"><i class="icon-calendar"></i></span>
 									</div>
-									
-									
+
+
 									<label>地址</label>
-									<textarea name="address" rows="3" class="input-xlarge"></textarea>
+									<textarea name="address" rows="3" class="input-xlarge" id="edditaddress"></textarea>
 
 								</div>
 
@@ -249,11 +251,11 @@
 					</div>
 					<!-- /.modal -->
 				</div>
-				
-				
-				
-				
-						<div class="modal fade" id="delectMember" tabindex="-1"
+
+
+
+
+				<div class="modal fade" id="delectMember" tabindex="-1"
 					role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 					<div class="modal-dialog">
 						<div class="modal-content">
@@ -263,19 +265,52 @@
 								<h4 class="modal-title" id="myModalLabel">刪除會員資料</h4>
 							</div>
 							<div class="modal-body" id="delectNumber"></div>
-							<input size="16" type="text" value="" name="hiddenVal"   id="hiddenVal" style="display:none"/>
+							<input size="16" type="text" value="" name="hiddenVal"
+								id="hiddenVal" style="display: none" />
 							<div class="modal-footer">
 								<button type="button" class="btn btn-default"
 									data-dismiss="modal">取消</button>
-								<button type="button" class="btn btn-primary"  onclick="delectMemberInformation()">確定</button>
+								<button type="button" class="btn btn-primary"
+									onclick="delectMemberInformation()">確定</button>
 							</div>
 						</div>
 						<!-- /.modal-content -->
 					</div>
 
 				</div>
-				
-				
+
+
+
+
+				<!-- 模态框（Modal） -->
+				<div class="modal fade" id="myModalRefuse" tabindex="-1"
+					role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal"
+									aria-hidden="true">×</button>
+								<h5 class="modal-title" id="myModalLabel">拒绝申请</h5>
+							</div>
+							<div class="modal-body">
+								请输入拒绝申请的原因<span style="color: red">*</span><br>
+								<textarea name="refuseTextareaContext" rows="10" cols="30"></textarea>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default"
+									data-dismiss="modal">关闭</button>
+								<button type="button" id="btnRefuseSave" class="btn btn-primary"
+									data-dismiss="modal">保存</button>
+							</div>
+						</div>
+						<!-- /.modal-content -->
+					</div>
+					<!-- /.modal-dialog -->
+				</div>
+				<!-- /.modal -->
+
+
+
 
 				<footer>
 				<hr>
@@ -378,23 +413,29 @@
 								} else {
 									str += "<tr>";
 								}
-								str += "<td>" + i + "</td>";
+								str += "<td >" + i + "</td>";
 								str += "<td>" + customerNumber + "</td>"
-								str += "<td>" + userName + "</td>"
-								str += "<td>" + userPhone + "</td>"
-								str += "<td>" + custEmail + "</td>"
-								str += "<td>" + address + "</td>"
+								str += "<td id='"+customerNumber+"Name'>"
+										+ userName + "</td>"
+								str += "<td id='"+customerNumber+"Phone'>"
+										+ userPhone + "</td>"
+								str += "<td id='"+customerNumber+"Email'>"
+										+ custEmail + "</td>"
+								str += "<td id='"+customerNumber+"addrss'>"
+										+ address + "</td>"
 								str += "<td>" + createTime + "</td>"
-								str += "<td>" + customerBenefitExpires + "</td>"
-								str += "<td> <a href=''#myeditmember' role='button'  data-toggle='modal' data-target='#editmember'><i class='icon-pencil' ></i></a>"	
+								str += "<td>" + customerBenefitExpires
+										+ "</td>"
+								str += "<td> <a href=''#editmember' role='button'  data-toggle='modal' data-target='#editmember'  id='"
+										+ customerNumber
+										+ "' onclick='editCustMember("
+										+ customerNumber
+										+ ")'><i class='icon-pencil' ></i></a>"
 								str += "<a href=''#' role='button'   data-toggle='modal' data-target='#delectMember'"
 								str += "onclick='editAddress("
-								str += "/"+customerNumber+"/"
+								str += "/" + customerNumber + "/"
 								str += ")'"
 								str += "><i class='icon-remove'></i></a></td> </tr>"
-			
-								
-								
 
 								$('#trhead').append(str);
 							}
@@ -414,9 +455,9 @@
 			});
 		}
 	</script>
-	
-	
-	
+
+
+
 	<script type="text/javascript">
 		$(".form_datetime").datetimepicker({
 			format : "dd-MM-yyyy hh:ii",
@@ -425,27 +466,26 @@
 			startDate : "2013-02-14 10:00",
 			minuteStep : 10
 		});
-		
 
-		function editAddress(id,obj){	
+		function editAddress(id, obj) {
 			var str = id.toString();
-			str = str.substring(0, str.length-1);  //1234567
-			str = str.substring(1,str.length);
+			str = str.substring(0, str.length - 1); //1234567
+			str = str.substring(1, str.length);
+			var t = $("#" + str + "").prev().html();//结果是：2
+			console.log(t);
 			$("#hiddenVal").val(str);
-			$("#delectNumber").text("您確定要刪除這個帳號嗎? :"+str);
-			}
-		
-		
-		function delectMemberInformation(){
+			$("#delectNumber").text("您確定要刪除這個帳號嗎? :" + str);
+		}
+
+		function delectMemberInformation() {
 			var getValue = $("#hiddenVal").val();
-			
+
 			var user = {
-					"userNumber" : getValue,
-					"cdoe" : "0",
-					"message" : "delectnumber"
-				};
-			
-			
+				"userNumber" : getValue,
+				"cdoe" : "0",
+				"message" : "delectnumber"
+			};
+
 			$.ajax({
 				//几个参数需要注意一下
 				type : "POST",//方法类型
@@ -467,6 +507,35 @@
 				}
 			});
 
+		}
+
+		// 		  $('#editmember').on('show.bs.modal', function (event,row) {
+		// 		        var getIdFromRow = $(event.relatedTarget);
+		// 		        var td = $(e.target).closest('td');
+		// 		     	alert('15');
+
+		// 		    });
+
+		function editCustMember(obj) {
+
+			alert(obj.id);
+			var objName = obj.id + "Name";
+			var objPhone = obj.id + "Phone";
+			var objEmail = obj.id + "Email";
+			var objaddress = obj.id + "address";
+			objName = $("#" + objName + "").text();
+			objPhone = $("#" + objPhone + "").text();
+			objEmail = $("#" + objEmail + "").text();
+			objaddress = $("#" + objaddress + "").text();
+			
+		
+			$("#edditName").val(objName);
+			$("#edditPhone").val(objPhone);
+			$("#edditEmail").val(objEmail);
+			$("#edditaddress").val(objaddress);
+	
+
+			
 		}
 	</script>
 
