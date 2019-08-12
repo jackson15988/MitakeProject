@@ -217,17 +217,17 @@
 									aria-hidden="true">&times;</button>
 								<h4 class="modal-title" id="myModalLabel">編輯會員資料</h4>
 							</div>
-							<form id="form1" onsubmit="return false" action="##"
+							<form id="form2" onsubmit="return false" action="##"
 								method="post">
 								<div class="modal-body">
 									<label>會員姓名</label> <input type="text" name="username"
 										class="input-xlarge" id="edditName"> <label>會員手機號碼</label> <input
 										type="text" name="userPhone" class="input-xlarge" id="edditPhone"> <label>EMAIL</label>
-									<input type="text" name="email" class="input-xlarge" id="edditEmail"> <label>會員到期日期</label>
+									<input type="text" name="email" class="input-xlarge" id="edditEmail" > <label>會員到期日期</label>
 
 									<div class="input-append date form_datetime">
-										<input size="16" type="text" value=""
-											name="custMemberDataTime" readonly> <span
+										<input size="16" type="text" 
+											name="custMemberDataTime" readonly  id="editMemberDataTime"> <span
 											class="add-on"><i class="icon-remove"></i></span> <span
 											class="add-on"><i class="icon-calendar"></i></span>
 									</div>
@@ -235,24 +235,23 @@
 
 									<label>地址</label>
 									<textarea name="address" rows="3" class="input-xlarge" id="edditaddress"></textarea>
+									
+										<input size="16" type="text" value="" name="hiddenVal"
+								id="hiddenVal" style="display: none" />
 
 								</div>
-
 								<div class="modal-footer">
 									<button type="button" class="btn btn-default"
 										data-dismiss="modal">关闭</button>
 									<button type="button" class="btn btn-primary"
-										onclick="addmemberInformation()">提交更改</button>
+										onclick="editInformation()">提交更改</button>
 								</div>
-
 							</form>
 						</div>
 						<!-- /.modal-content -->
 					</div>
 					<!-- /.modal -->
 				</div>
-
-
 
 
 				<div class="modal fade" id="delectMember" tabindex="-1"
@@ -354,6 +353,33 @@
 
 					if (result.code == 0) {
 						alert("添加成功");
+						$("#editmember .close").click()
+						loadingData();
+					}
+					;
+				},
+				error : function() {
+					alert("异常！");
+				}
+			});
+		}
+		
+		
+		
+
+		
+		function editInformation() {
+			$.ajax({
+				//几个参数需要注意一下
+				type : "POST",//方法类型
+				dataType : "json",//预期服务器返回的数据类型
+				url : "/mitakeProject/editMember",//url
+				data : $('#form2').serialize(),
+				success : function(result) {
+					console.log(result);//打印服务端返回的数据(调试用)
+
+					if (result.code == 0) {
+						alert("編輯成功");
 						$("#myModal .close").click()
 						loadingData();
 					}
@@ -421,10 +447,9 @@
 										+ userPhone + "</td>"
 								str += "<td id='"+customerNumber+"Email'>"
 										+ custEmail + "</td>"
-								str += "<td id='"+customerNumber+"addrss'>"
-										+ address + "</td>"
+								str += "<td id='"+customerNumber+"address'>"+ address + "</td>"
 								str += "<td>" + createTime + "</td>"
-								str += "<td>" + customerBenefitExpires
+								str += "<td id='"+customerNumber+"customerBenefitExpires'>" + customerBenefitExpires
 										+ "</td>"
 								str += "<td> <a href=''#editmember' role='button'  data-toggle='modal' data-target='#editmember'  id='"
 										+ customerNumber
@@ -463,7 +488,7 @@
 			format : "dd-MM-yyyy hh:ii",
 			autoclose : true,
 			todayBtn : true,
-			startDate : "2013-02-14 10:00",
+			startDate : "02-14-2019 10:00",
 			minuteStep : 10
 		});
 
@@ -518,25 +543,31 @@
 
 		function editCustMember(obj) {
 
-			alert(obj.id);
+	
 			var objName = obj.id + "Name";
 			var objPhone = obj.id + "Phone";
 			var objEmail = obj.id + "Email";
 			var objaddress = obj.id + "address";
+			var objcustomerBenefitExpires = obj.id + "customerBenefitExpires";
 			objName = $("#" + objName + "").text();
 			objPhone = $("#" + objPhone + "").text();
 			objEmail = $("#" + objEmail + "").text();
 			objaddress = $("#" + objaddress + "").text();
-			
+			objcustomerBenefitExpires = $("#" + objcustomerBenefitExpires + "").text();
 		
 			$("#edditName").val(objName);
 			$("#edditPhone").val(objPhone);
-			$("#edditEmail").val(objEmail);
-			$("#edditaddress").val(objaddress);
-	
+			$("#edditEmail").val(objEmail); 	
+			$('#edditaddress').val(objaddress);			
+			$("#hiddenVal").val(obj.id);
+// 			$('#editMemberDataTime').val("31-July-2020 06:20");
 
-			
 		}
+		
+		
+		function coveDataTimer (datatimer){
+			
+ 			}
 	</script>
 
 </body>

@@ -89,6 +89,73 @@ public class mirakeBo {
 		}
 		return successCode;
 	}
+	
+	
+	public static String editMember(HashMap<String, Object> editMap) {
+		Connection conn = null;
+		Statement stmt = null;
+		String successCode = "";
+		// 連接MySQL
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			// System.out.println("連接成功MySQLToJava");
+			// 建立讀取資料庫 (test 為資料庫名稱; user 為MySQL使用者名稱; passwrod 為MySQL使用者密碼)
+			String datasource = "jdbc:mysql://45.32.49.87:3306/myforex?user=root&password=36f57bc6fd&useSSL=false&serverTimezone=UTC&characterEncoding=UTF-8";
+			// 以下的資料庫操作請參考本blog中: "使用 Java 連結與存取 access 資料庫 (JDBC)"
+			conn = DriverManager.getConnection(datasource);
+			System.out.println("連接成功MySQL");
+			stmt = conn.createStatement();
+			
+	
+			
+			String sql = "	UPDATE fo_customerlist SET  USERNAME ='" +editMap.get("USERNAME") +"',USERPHONE ='"+editMap.get("USERPHONE")+"',USEREMAIL='" + editMap.get("USEREMAIL")+
+					"',ADDRESS='" +  editMap.get("ADDRESS") +"',UPDATETIME=NOW()";
+			
+			if(!"".equals(editMap.get("CUST_MEMBER_DATATIME"))) {
+				sql = sql+ ",CUSTOMER_BENEFIT_EXPIRES ='"+ editMap.get("CUST_MEMBER_DATATIME") +"' WHERE CUSTOMERNUMBER ='" + editMap.get("CUSTOMERNUMBER")+"'";		
+			}else {
+				sql = sql+ "WHERE CUSTOMERNUMBER =  '" + editMap.get("CUSTOMERNUMBER")+"'";				
+			}
+			
+	
+
+			System.out.println("使用DB语法:" + sql);
+			stmt.executeUpdate(sql);
+
+			// 撈出剛剛新增的資料
+			// ResultSet result = stmt.executeQuery("SELECT * FROM
+			// fo_management");
+			// while (result.next()) {
+			// System.out.print(result.getInt(1) + "\t");
+			// System.out.print(result.getString(2) + "\t");
+			// System.out.print(result.getString(3) + "\t");
+			// }
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			successCode = "-1";
+			try {
+				conn.rollback();
+				stmt.close();
+				conn.close();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+				successCode = "-1";
+			}
+		} finally {
+			try {
+				stmt.close();
+				conn.close();
+				System.out.println("關閉搜尋引擎以及關閉DB連線");
+				successCode = "0";
+			} catch (SQLException e) {
+				successCode = "-1";
+				e.printStackTrace();
+			}
+		}
+		return successCode;
+	}
 
 	/**
 	 * @author IMI-JAVA-Ryan 刪除會員資料 該筆 傳入會員編號 (亂數那個)

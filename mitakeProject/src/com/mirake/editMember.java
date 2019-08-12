@@ -3,7 +3,6 @@ package com.mirake;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.HashMap;
 
 import javax.servlet.ServletException;
@@ -16,56 +15,46 @@ import com.mirake.server.bo.Mt4ForxUtil;
 import com.mirake.server.bo.mirakeBo;
 
 /**
- * 
- * @author IMI-JAVA-Ryan �i�J��Ʈw�ϥΤ�k
- *
+ * Servlet implementation class editMember
  */
-@WebServlet("/addNewUser")
-public class addNewUser extends HttpServlet {
+@WebServlet("/editMember")
+public class editMember extends HttpServlet {
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String userName = request.getParameter("username");
 		String userPhone = request.getParameter("userPhone");
 		String email = request.getParameter("email");
 		String address = request.getParameter("address");
-		String expirationTimer  =request.getParameter("custMemberDataTime");
-		
+		String expirationTimer = request.getParameter("custMemberDataTime");
+		String custId = request.getParameter("hiddenVal");
+
 		try {
-			expirationTimer = Mt4ForxUtil.timeFormat(expirationTimer);
+			if (!expirationTimer.isEmpty()) {
+				expirationTimer = Mt4ForxUtil.timeFormat(expirationTimer);
+			}
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		System.out.println("權益到期間:" + expirationTimer);
-		
-		
-		HashMap<String, Object> inserVal = new HashMap<>();
-		inserVal.put("USERNAME", userName);
-		inserVal.put("USERPHONE", userPhone);
-		inserVal.put("USEREMAIL", email);
-		inserVal.put("ADDRESS", address);
-		inserVal.put("CUST_MEMBER_DATATIME", expirationTimer);
-	
-		java.util.Random rnd = new java.util.Random();
-		rnd.setSeed(System.currentTimeMillis());
-		String runStr = String.valueOf(rnd.nextInt()); 
-		inserVal.put("CUSTOMERNUMBER", "MTK" + runStr.substring(1,runStr.length()));
 
+		HashMap<String, Object> editVal = new HashMap<>();
+		editVal.put("USERNAME", userName);
+		editVal.put("USERPHONE", userPhone);
+		editVal.put("USEREMAIL", email);
+		editVal.put("ADDRESS", address);
+		editVal.put("CUST_MEMBER_DATATIME", expirationTimer == null ? "" : expirationTimer);
+		editVal.put("CUSTOMERNUMBER", custId);
 
-		String resultCdoe = mirakeBo.addNewMember(inserVal);
-//		System.out.println("�|���W��" + userName);
-//		System.out.println("�|�����" + userPhone);
-//		System.out.println("�|��EMAIL" + email);
-//		System.out.println("�|���a�}" + address);
-//
-//		System.out.println("���\�X�P�_:" + resultCdoe);
+		String resultCdoe = mirakeBo.editMember(editVal);
 
 		response.setContentType("text/json;charset=UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter out = response.getWriter();
 
 		if (resultCdoe.equals("0")) {
-			String str = "{\"code\":\"0\",\"message\":\"新增成功\"}";
+			String str = "{\"code\":\"0\",\"message\":\"編輯成功\"}";
 			out.println(str);
 		} else
 
