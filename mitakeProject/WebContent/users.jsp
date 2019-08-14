@@ -560,7 +560,7 @@
 			$("#edditEmail").val(objEmail); 	
 			$('#edditaddress').val(objaddress);			
 			$("#hiddenVal").val(obj.id);
-// 			$('#editMemberDataTime').val("31-July-2020 06:20");
+			$('#editMemberDataTime').val("");
 
 		}
 		

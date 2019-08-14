@@ -43,6 +43,7 @@ String  accountName = (String)sess.getAttribute("account");
         <a href="#dashboard-menu" class="nav-header" data-toggle="collapse"><i class="icon-dashboard"></i>控制台</a>
         <ul id="dashboard-menu" class="nav nav-list collapse in">
             <li ><a href="users.jsp">客戶基本資料名單</a></li>
+            <li ><a href="smsCenter.jsp">簡訊控制中心</a></li>
 <!--             <li ><a href="user.jsp">Sample Item</a></li> -->
 <!--             <li ><a href="media.html">Media</a></li> -->
 <!--             <li ><a href="calendar.html">Calendar</a></li> -->
